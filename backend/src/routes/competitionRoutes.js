@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getCompetitionDetails,
   getAllCompetitions,
+  getAllUsers,
   getUserProfile,
 } = require('../controllers/competitionController');
 
@@ -26,6 +27,9 @@ const {
 // Public Competition Routes
 router.get('/competitions', getAllCompetitions);
 router.get('/competitions/:slug', getCompetitionDetails);
+
+// Users & Profile Routes
+router.get('/users', getAllUsers);
 router.get('/users/:userId/profile', getUserProfile);
 
 // Registration Routes

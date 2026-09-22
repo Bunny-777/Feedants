@@ -3,7 +3,12 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { TRANSLATIONS } from '../constants/translations';
 
-export default function BottomNavBar({ language, activeNav = 'Competitions', onSelectNav }) {
+export default function BottomNavBar({
+  language,
+  currentUser,
+  activeNav = 'Competitions',
+  onSelectNav,
+}) {
   const t = TRANSLATIONS[language] || TRANSLATIONS.en;
 
   return (
@@ -75,7 +80,9 @@ export default function BottomNavBar({ language, activeNav = 'Competitions', onS
       >
         <Image
           source={{
-            uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80',
+            uri:
+              currentUser?.avatarUrl ||
+              'https://avatars.githubusercontent.com/u/179251282?v=4',
           }}
           style={[
             styles.profileAvatar,

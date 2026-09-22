@@ -14,6 +14,17 @@ const getBaseUrl = () => {
 
 export const API_BASE_URL = getBaseUrl();
 
+export async function fetchUsers() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/users`);
+    const json = await res.json();
+    return json;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw error;
+  }
+}
+
 export async function fetchCompetitions(userId = '') {
   try {
     const url = userId ? `${API_BASE_URL}/competitions?userId=${encodeURIComponent(userId)}` : `${API_BASE_URL}/competitions`;

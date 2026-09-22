@@ -54,7 +54,7 @@ export default function HomeScreen({
         </View>
         <Image
           source={{
-            uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80',
+            uri: currentUser?.avatarUrl || 'https://avatars.githubusercontent.com/u/179251282?v=4',
           }}
           style={styles.userAvatar}
         />

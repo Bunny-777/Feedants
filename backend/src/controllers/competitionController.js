@@ -101,6 +101,19 @@ async function getAllCompetitions(req, res) {
 }
 
 /**
+ * Get all users directly from database
+ */
+async function getAllUsers(req, res) {
+  try {
+    const User = require('../models/User');
+    const users = await User.find().sort({ createdAt: 1 });
+    return res.status(200).json({ success: true, data: users });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+}
+
+/**
  * Get user profile summary with registrations and submissions
  */
 async function getUserProfile(req, res) {
@@ -109,9 +122,9 @@ async function getUserProfile(req, res) {
     const User = require('../models/User');
     const user = await User.findOne({ userId }) || {
       userId,
-      name: userId === 'user_unregistered_02' ? 'Priya Patel' : userId === 'user_submitted_03' ? 'Rohit Verma' : 'Kushal Sharma',
+      name: userId === 'user_unregistered_02' ? 'Jasmeet kaur' : userId === 'user_submitted_03' ? 'Rohit Verma' : 'Kushagra Shrivastava',
       email: `${userId}@feedants.com`,
-      avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/179251282?v=4',
     };
 
     const registrations = await Registration.find({ userId }).populate('competitionId');
@@ -139,5 +152,6 @@ async function getUserProfile(req, res) {
 module.exports = {
   getCompetitionDetails,
   getAllCompetitions,
+  getAllUsers,
   getUserProfile,
 };

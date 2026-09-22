@@ -4,6 +4,7 @@ import { THEME } from '../constants/theme';
 
 export default function TesterToolbar({
   currentUser,
+  userList = [],
   onSwitchUser,
   onSimulateRush,
   onResetState,
@@ -14,11 +15,19 @@ export default function TesterToolbar({
 }) {
   const [collapsed, setCollapsed] = useState(true);
 
-  const users = [
-    { userId: 'user_registered_01', name: 'Kushal (Registered)', role: 'Registered' },
-    { userId: 'user_unregistered_02', name: 'Priya (Unregistered)', role: 'Unregistered' },
+  const defaultUsers = [
+    { userId: 'user_registered_01', name: 'Kushagra (Registered)', role: 'Registered' },
+    { userId: 'user_unregistered_02', name: 'Jasmeet (Unregistered)', role: 'Unregistered' },
     { userId: 'user_submitted_03', name: 'Rohit (Submitted)', role: 'Submitted Entry' },
   ];
+
+  const users = userList.length > 0
+    ? userList.map((u) => ({
+        userId: u.userId,
+        name: `${u.name?.split(' ')[0]} (${u.userId === 'user_registered_01' ? 'Registered' : u.userId === 'user_unregistered_02' ? 'Unregistered' : 'Submitted'})`,
+        fullUser: u,
+      }))
+    : defaultUsers;
 
   return (
     <View style={styles.container}>

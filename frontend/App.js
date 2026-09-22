@@ -9,6 +9,7 @@ import {
 import { StatusBar } from 'expo-status-bar';
 
 import {
+  fetchUsers,
   fetchCompetitions,
   fetchCompetitionDetails,
   registerForCompetition,
@@ -42,10 +43,12 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('Competitions');
   const [selectedCompetitionSlug, setSelectedCompetitionSlug] = useState('feedants-classical-dance');
 
+  const [userList, setUserList] = useState([]);
   const [currentUser, setCurrentUser] = useState({
     userId: 'user_registered_01',
-    name: 'Kushal Sharma',
-    email: 'kushal@example.com',
+    name: 'Kushagra Shrivastava',
+    email: 'kushagra@example.com',
+    avatarUrl: 'https://avatars.githubusercontent.com/u/179251282?v=4',
   });
 
   const [competitionsList, setCompetitionsList] = useState([]);
@@ -62,7 +65,23 @@ export default function App() {
   const [testimonialsOpen, setTestimonialsOpen] = useState(false);
   const [createSheetOpen, setCreateSheetOpen] = useState(false);
 
-  // 1. Fetch all competitions list from MongoDB
+  // 1. Fetch all users from MongoDB
+  const loadUsersData = useCallback(async () => {
+    try {
+      const res = await fetchUsers();
+      if (res.success && res.data && res.data.length > 0) {
+        setUserList(res.data);
+        const matched = res.data.find((u) => u.userId === currentUser.userId);
+        if (matched) {
+          setCurrentUser(matched);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to load users:', err);
+    }
+  }, [currentUser.userId]);
+
+  // 2. Fetch all competitions list from MongoDB
   const loadAllCompetitions = useCallback(async (user = currentUser) => {
     try {
       const res = await fetchCompetitions(user.userId);
@@ -74,7 +93,7 @@ export default function App() {
     }
   }, [currentUser]);
 
-  // 2. Fetch active competition details from MongoDB
+  // 3. Fetch active competition details from MongoDB
   const loadActiveCompetition = useCallback(async (slug = selectedCompetitionSlug, user = currentUser) => {
     if (!slug) return;
     try {
@@ -92,6 +111,7 @@ export default function App() {
   }, [currentUser, selectedCompetitionSlug]);
 
   useEffect(() => {
+    loadUsersData();
     loadAllCompetitions(currentUser);
     if (selectedCompetitionSlug) {
       loadActiveCompetition(selectedCompetitionSlug, currentUser);
@@ -100,6 +120,7 @@ export default function App() {
 
   const onRefresh = () => {
     setRefreshing(true);
+    loadUsersData();
     loadAllCompetitions(currentUser);
     if (selectedCompetitionSlug) {
       loadActiveCompetition(selectedCompetitionSlug, currentUser);
@@ -107,8 +128,9 @@ export default function App() {
   };
 
   // Switch between mock users (Registered / Unregistered / Submitted)
-  const handleSwitchUser = (user) => {
-    setCurrentUser(user);
+  const handleSwitchUser = (selected) => {
+    const fullUser = selected.fullUser || userList.find((u) => u.userId === selected.userId) || selected;
+    setCurrentUser(fullUser);
   };
 
   // Navigating to competition details
@@ -362,6 +384,7 @@ export default function App() {
         {/* Top Evaluator Testing Toolbar */}
         <TesterToolbar
           currentUser={currentUser}
+          userList={userList}
           onSwitchUser={handleSwitchUser}
           onSimulateRush={handleSimulateRush}
           onResetState={handleResetState}
@@ -398,6 +421,7 @@ export default function App() {
         {/* 5-Tab Navigation Bar */}
         <BottomNavBar
           language={language}
+          currentUser={currentUser}
           activeNav={selectedCompetitionSlug ? 'Competitions' : activeTab}
           onSelectNav={(tab) => {
             if (tab === 'Create') {

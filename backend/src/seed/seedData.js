@@ -11,15 +11,15 @@ async function seedDatabase() {
   const users = [
     {
       userId: 'user_registered_01',
-      name: 'Kushal Sharma',
-      email: 'kushal@example.com',
-      avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+      name: 'Kushagra Shrivastava',
+      email: 'kushagra@example.com',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/179251282?v=4',
     },
     {
       userId: 'user_unregistered_02',
-      name: 'Priya Patel',
-      email: 'priya@example.com',
-      avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
+      name: 'Jasmeet kaur',
+      email: 'meet@example.com',
+      avatarUrl: 'https://i.pinimg.com/originals/33/82/72/33827232590a7f9386f24a03c81b2b5f.png?nii=t',
     },
     {
       userId: 'user_submitted_03',
@@ -284,8 +284,8 @@ async function seedDatabase() {
   await Registration.create({
     competitionId: competition._id,
     userId: 'user_registered_01',
-    userName: 'Kushal Sharma',
-    userEmail: 'kushal@example.com',
+    userName: 'Kushagra Shrivastava',
+    userEmail: 'kushagra@example.com',
     amount: 99,
     paymentStatus: 'paid',
     paymentId: 'pay_feedants_init_001',
