@@ -1,4 +1,4 @@
-# Feedants - Competition Details Screen (Functional Full-Stack Module)
+# Freedants - Competition Details Screen (Functional Full-Stack Module)
 
 A production-grade, full-stack implementation of the **Feedants Competition Details screen** built for the **Full Stack Development Intern** technical assessment.
 
