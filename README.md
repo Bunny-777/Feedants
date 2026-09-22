@@ -74,6 +74,42 @@ Open **[http://localhost:8081](http://localhost:8081)** in your browser or scan 
 
 ---
 
+## 🌐 Live Cloud Deployment Guide
+
+### Option A: Deploying Backend (Render.com - 100% Free)
+1. Go to **[render.com](https://render.com)** and log in with your GitHub account.
+2. Click **New +** → **Web Service**.
+3. Select your repository: **`Bunny-777/Feedants`**.
+4. Configure settings:
+   - **Root Directory**: `backend`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+5. Add Environment Variables:
+   - `PORT`: `5000`
+   - `MONGODB_URI`: *(Optional: paste your MongoDB Atlas free cluster connection string. If left blank, it uses automatic in-memory persistence!)*
+   - `NODE_ENV`: `production`
+6. Click **Create Web Service**. Your backend will be live at:
+   `https://feedants-backend.onrender.com`
+
+---
+
+### Option B: Deploying Frontend (Vercel - 100% Free)
+1. Go to **[vercel.com](https://vercel.com)** and log in with your GitHub.
+2. Click **Add New...** → **Project**.
+3. Import your **`Bunny-777/Feedants`** repository.
+4. Configure settings:
+   - **Root Directory**: Click edit and select `frontend`.
+   - **Framework Preset**: `Other`
+   - **Build Command**: `npx expo export -p web`
+   - **Output Directory**: `dist`
+5. Add Environment Variable:
+   - Key: `EXPO_PUBLIC_API_URL`
+   - Value: `https://feedants-backend.onrender.com/api` *(Your Render backend URL + `/api`)*
+6. Click **Deploy**. Your React Native application is live and accessible on any device worldwide!
+
+---
+
 ## 📋 Evaluation Criteria & Documentation
 
 ### 1. Important Assumptions Made
